@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import MealDetails from "./MealDetails";
 
 export default function MealItem({
   title,
@@ -21,7 +22,7 @@ export default function MealItem({
 
   const handlePress = () => {
     navigation.navigate("MealDetails", {
-      id: id,
+      mealId: id,
     });
   };
   return (
@@ -36,11 +37,11 @@ export default function MealItem({
             <Image source={{ uri: img }} style={styles.image} />
             <Text style={styles.title}> {title}</Text>
           </View>
-          <View style={styles.details}>
-            <Text style={styles.detailItem}>{duration}</Text>
-            <Text style={styles.detailItem}>{complexity}</Text>
-            <Text style={styles.detailItem}>{affordability}</Text>
-          </View>
+          <MealDetails
+            duration={duration}
+            complexity={complexity}
+            affordability={affordability}
+          />
         </View>
       </Pressable>
     </View>
