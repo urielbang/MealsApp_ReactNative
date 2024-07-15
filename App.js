@@ -5,8 +5,50 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MealsDinamicScree from "./screens/MealsDinamicScree";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavoriteScreen from "./screens/FavoriteScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function drawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#24180f" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#2e20159e" },
+        drawerContentStyle: { backgroundColor: "#24180f" },
+        drawerInactiveTintColor: "white",
+
+        drawerActiveTintColor: "#24180f",
+        drawerActiveBackgroundColor: "#866d5a9e",
+      }}
+    >
+      <Drawer.Screen
+        name="categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="list" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="favorites"
+        component={FavoriteScreen}
+        options={{
+          title: "Favorites",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="star" size={size} color={color} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -22,20 +64,18 @@ export default function App() {
         >
           <Stack.Screen
             name="MealsCategories"
-            component={CategoriesScreen}
+            component={drawerNavigator}
             options={{
               title: "All Categories",
+              headerShown: false,
             }}
           />
+          <Stack.Screen name="MealsDinamic" component={MealsDinamicScree} />
           <Stack.Screen
-            name="MealsDinamic"
-            component={MealsDinamicScree}
-            // options={({ route, navigation }) => {
-            //   const catId = route.params.categoryId;
-            //   return { title: catId };
-            // }}
+            name="MealDetails"
+            component={MealDetailsScreen}
+            options={{ title: "About the Meal" }}
           />
-          <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
